@@ -1,54 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:todoey/Components/task_tile.dart';
+import 'package:todoey/model/task.dart';
 
 class TaskList extends StatefulWidget {
-  const TaskList({required this.tasks});
-
-  final List<String> tasks;
-
   @override
   _TaskListState createState() => _TaskListState();
 }
 
 class _TaskListState extends State<TaskList> {
-  bool checkState = false;
+  //from stateful to here so now we don't have to use widget.tasks to access it
+  final List<Task> tasks = [
+    Task(name: 'Bla'),
+    Task(name: 'Aloo'),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: widget.tasks.length,
+      itemCount: tasks.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(
-            widget.tasks[index],
-            style: TextStyle(
-              decoration: checkState ? TextDecoration.lineThrough : null,
-            ),
-          ),
-          trailing: TaskCheckbox(
-            isChecked: checkState,
-            checkboxCallback: (checkboxState) {
-              setState(() {
-                checkState = checkboxState!;
-              });
-            },
-          ),
+        return TaskTile(
+          name: tasks[index].name,
+          isChecked: tasks[index].isDone,
+          checkboxCallback: (value) {
+            setState(() {
+              tasks[index].toggleDone();
+            });
+          },
         );
       },
-    );
-  }
-}
-
-class TaskCheckbox extends StatelessWidget {
-  const TaskCheckbox({this.isChecked: false, required this.checkboxCallback});
-  final bool isChecked;
-  final Function(bool?)? checkboxCallback;
-
-  @override
-  Widget build(BuildContext context) {
-    return Checkbox(
-      value: isChecked,
-      activeColor: Colors.lightBlueAccent,
-      onChanged: checkboxCallback,
     );
   }
 }

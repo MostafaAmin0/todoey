@@ -3,8 +3,6 @@ import 'package:todoey/Components/add_task.dart';
 import 'package:todoey/Components/task_list.dart';
 
 class TasksScreen extends StatelessWidget {
-  final List<String> tasks = ['Aloo', 'blaa'];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,7 +70,7 @@ class TasksScreen extends StatelessWidget {
                   topRight: Radius.circular(20.0),
                 ),
               ),
-              child: TaskList(tasks: tasks),
+              child: TaskList(),
             ),
           ),
         ],
