@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class AddTask extends StatelessWidget {
+  final Function addTaskCallback;
+
+  const AddTask({required this.addTaskCallback});
+
 
   @override
   Widget build(BuildContext context) {
-    String task;
+    String? newTask;
 
     return Container(
       color: Color(0xff757575),
@@ -34,15 +38,14 @@ class AddTask extends StatelessWidget {
             TextField(
               autofocus: true,
               textAlign: TextAlign.center,
-              onChanged: (value){
-                task=value;
+              onChanged: (value) {
+                newTask = value;
               },
             ),
             SizedBox(
               height: 15.0,
             ),
             TextButton(
-              onPressed: null,
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.resolveWith(
                     (state) => Colors.lightBlueAccent),
@@ -53,6 +56,9 @@ class AddTask extends StatelessWidget {
                   color: Colors.white,
                 ),
               ),
+              onPressed: (){
+                addTaskCallback(newTask);
+              },
             ),
           ],
         ),
