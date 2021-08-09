@@ -1,17 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:todoey/Components/task_tile.dart';
-import 'package:todoey/model/task.dart';
+import 'package:provider/provider.dart';
+import '../model/task_data.dart';
 
-class TaskList extends StatefulWidget {
-  final List<Task> tasks;
-
-  TaskList({required this.tasks});
-
-  @override
-  _TaskListState createState() => _TaskListState();
-}
-
-class _TaskListState extends State<TaskList> {
+class TaskList extends StatelessWidget {
   //from stateful to here so now we don't have to use widget.tasks to access it
   // List<Task> tasks = [
   //   Task(name: 'Bla'),
@@ -21,15 +13,13 @@ class _TaskListState extends State<TaskList> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: widget.tasks.length,
+      itemCount: context.read<TaskData>().taskLenght,
       itemBuilder: (context, index) {
         return TaskTile(
-          name: widget.tasks[index].name,
-          isChecked: widget.tasks[index].isDone,
+          name: context.read<TaskData>().taskList[index].name,
+          isChecked: context.read<TaskData>().taskList[index].isDone,
           checkboxCallback: (value) {
-            setState(() {
-              widget.tasks[index].toggleDone();
-            });
+            context.read<TaskData>().updateTask(context.read<TaskData>().taskList[index]);
           },
         );
       },
